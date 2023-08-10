@@ -1,0 +1,51 @@
+
+Creation of VM (Gathering requirements):
+
+Step1: Login into https://portal.azure.com/
+Step2: Create a resource group --> Type "Resource Group" in main search box
+-> Resource Group:
+
+		Name	: Rg-Admin-0123
+		Location: Eastus (you can choose based on your need/choice)
+Step3: Create a Virtual Machine
+
+-> GoTo SearchBox --> Type "VIrtual machines" 
+				  --> select "Virtual Machines"
+				  --> Enter Following Fields (Mandatory)
+						--> Choose Resource Group Name from Dropdown
+						--> Name: "Enter VM Name" (ex: "WinSep22")
+						--> Region: "Keep the as per Resource Group"
+						--> Image: Choose OS flavor from Dropdown (Ex: Windows Server 2019)
+						--> Vm Architecture: x64
+						--> Size: B4MS ( Select See All Sizes and choose desired size for your VM)
+						--> Enter User Name and Password
+						    UserName: Azadmin
+							Password: Password@123
+						--> Set "Public inbound ports" : "None"
+						--> Next:Disk --> Next:Networking
+						--> Next:Management 
+						--> Next:Monitoring
+							--> BooTDiagnostics: disbale
+						-->Review+Create
+						--> Create
+Step4: Copy The Public IP of VM 
+
+	--> Go To Virtaul machine page
+	--> Select the VM ( The one created recently)
+	--> go to Overview of  VM --> Copy "Public IP Number" (Right hand side of the page)
+	
+Step5:	Start Menu --> Type RDP (remote desktop connection) --> Open
+		--> Enter Public IP address --> Hit EnterKey
+		
+		Note: You will receive an connection error as we have not enabled Firewall rules to connect RDP
+
+Step6: Go to VM --> Choose Networking from Left-hand side menu
+				--> select "Add Inbound Rule" (right-hand side of the page)
+				--> Choose "RDP" in Service drop down --> select create
+				
+Step7: Now Try to connect VM using RDP with your VM credentials
+
+Assignment:
+===========
+
+Create the VM for Linux (ubuntu:18.04LTS) and verify whether you're able to connect the VM 	using port number 22 (SSH)			

@@ -1,0 +1,133 @@
+
+Step1: Login into Https://portal.azure.com/
+==> Create Resource Group in Azure
+
+  --> Goto Poratl.azure.com 
+  --> Search "Resource Groups" in the serach box which is in midddle of the top screen
+  
+  --> Create Resource group
+       --> Name of The resource Group: ""
+	   --> Location: "East US" 
+	   --> Click on "Next:tags" (If you want to add any key:value pairs  you can supply.. There is no specific limitations)
+	   --> Click on "Review+Create" --> Validation should be passed
+	   --> Create
+  
+  
+  =======================
+  
+  VIrtual Machine:
+  Pre-checks:
+  
+  CPU
+  RAM 
+  OS   (Windows/Linux/RHEL/UBUNTU/CENTOS/Debian/Suse/Etc)
+  Price
+  Disk
+  Network Interface Card (NIC)--> Its depends on Subnet --> Subnet depends on VIrtual Network (Vnet)
+  Public IP address
+  Network Security Group  (It contains security rules /Firewall rules)
+  
+  ===============================================
+  
+  1) Create Network Security Group(NSG):
+  
+     --> Goto Poratl.azure.com --> Once you authenticated with your credentials
+	 --> Search "Network Security Group" in the serach box which is in midddle of the top screen
+	 --> Choose Resource Group Name from Drop down or else create new resource by hitting "create resource Group"
+	 --> Enter Name of Network Security Group (Name: June-2022-NSG)
+	 --> Click on Review+Create --> Validate --> Create
+		Resource group: June-2022
+		Region:East US
+		name: June-2022-NSG
+  
+  
+  2) Create VIrtual Network(Vnet)
+  
+     --> --> Goto Poratl.azure.com --> Once you authenticated with your credentials
+	 --> Search "Virtual Networks" in the serach box which is in midddle of the top screen
+	 --> Choose Resource Group from Drop down (Name: June-2022)
+	 --> Enter Name for Vnet: "Vnet-Nov"
+	 --> Click on "Next:IPAddress" Tab/button
+	 --> Enter Address Space : "10.5.0.0/16
+	 --> TO Create Subnet 
+	      --> CLick on +Add Subnet
+		  --> Enter Subnet Name (String: Subnet1)
+		  --> Enter Subnet Address (it should be derived from: Address Space)
+		       10.5.0./24
+		  --> Add
+	 --> Leave the security and Tags tabs as is
+	 --> Click "Next:REview+Create"
+	 
+3) Public IP
+   
+   --> Goto Poratl.azure.com --> Once you authenticated with your credentials
+	 --> Search "Pbblic IP" in the serach box which is in midddle of the top screen 
+	 --> Choose Resource Group from Drop down (Name: June-2022)
+	 --> Location: EastUS (based on Resource group)
+	 --> Enter Name for Vnet: "VMNOVIP"
+	 --> IP Version: IPv4
+	 --> SKU: Basic
+	 --> Tier: Regional  (Default)
+	 --> IP address assignment: Dynamic
+	 -->idle Timeout: 4 (default)
+	 --> REview+Create --> validate --> Create
+
+4) VM Creation
+	--> Goto Poratl.azure.com --> Once you authenticated with your credentials
+	 --> Search "Pbblic IP" in the serach box which is in midddle of the top screen 
+	 --> ON The Basic TAB of  VM Creation
+	 --> Choose Resource Group from Drop down (Name: June-2022)
+	 --> Location: EastUS (based on Resource group)
+	 --> Enter VM Name: "YOUR CHOICE"
+	 -->  Set Availability options:No infrastructure redundancy required
+	 --> set Security Type should be "Standard"
+	 --> Choose OS Image from Dropdown/All images option --> Window Server --> Windows Server 2019 Datacenter - Gen2
+	 --> Choose OS SIZE image from Dropdown/All sizes option --> B2ms (Standard B2ms)
+	 --> Enter User Name(like: azadmin) and Password (PaaSword12345)
+	 --> set Public Inbound ports  to "NONE"
+	 --> CLikc Next:Disk ( leave it as it is) --> next:Networking 
+	 --> Choose VnetName (Like mfg-786-Vnet)
+	 --> Choose Subnet (like subnet1 )
+	 --> Set Public IP as "NONE" 
+	 --> Choose Advance in NIC network security group
+	 --> Click on Next:Management 
+	 --> Set Boot Diagnostics --> Disable
+	 --> Enable AutoShut down ( Select the check box)
+	 --> CLick on Next:Advanced --> Next:Tags --> Review+Create --> Validaton passed --> Create
+
+5) Associate Public IP addres to NIC of  VM
+
+   --> Goto Networking of VM /Network Interface in search box of top screen
+   --> Select VM Nic 
+   --> Goto Configuration 
+   --> Select IpConfig from bottom of the screen (right hand side)
+   --> Choose the option as "Associate" for Public Ip addres
+   --> Set the correct Public IP form Dropdown
+   --> select Save Option
+   
+6) Adding Inbound Rules To access VM over the internet 
+
+  Goto VM --> Networking section 
+  --> in the right hand side select add inbound rules 
+  --> Choose RDP from Service dropdown (validate port number: 3389, TCP , Action : Allow)
+  --> Enter Name : RDP
+  --> Save it.  
+  
+ 7) Now we all set to test the machine -->
+ 
+ Start button in key board 
+ --> type Remote desktop connection 
+ --> Enter Public IP of your VM 
+ --> Enter User Name and password
+ --> Validate VM accessible or not
+ 
+ --> OPen CMD prompt --> Run below command
+ --> IpCofig
+ 
+ 8) Once all validations and verification complete then create a document with each step along with screenshot
+ 9) Destory All resource by removing the Resource Groups
+ 10) Goto Resource group --> Choose delete resource group in middle of the screen --> Enter your resource group Name for confirmation--> Delete
+
+============================================
+
+Repeate all steps to create linux vm with updation of OS Image & Password policy as Password
